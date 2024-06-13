@@ -1,5 +1,5 @@
 import { Optional } from '@/core/types/optional'
-import { UniqueEntityId } from '../../../../core/entities/unique-entity-id'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { AggregateRoot } from '@/core/entities/aggregate-root'
 import { AnswerAttachmentList } from './answer-attachment-list'
 

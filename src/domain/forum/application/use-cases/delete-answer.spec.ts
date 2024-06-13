@@ -1,8 +1,8 @@
 import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'
 import { DeleteAnswerUseCase } from './delete-answer'
 import { makeAnswer } from 'test/factories/make-answer'
-import { UniqueEntityId } from '../../../../core/entities/unique-entity-id'
-import { NotAllowedError } from './errors/not-allowed-error'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
+import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
 
 let answersRepository: InMemoryAnswersRepository
 let sut: DeleteAnswerUseCase
