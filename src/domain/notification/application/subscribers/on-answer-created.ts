@@ -24,14 +24,16 @@ export class OnAnswerCreated implements EventHandler {
             answer.questionId.toString()
         )
 
-        if (question) {
-            await this.sendNotification.execute({
-                recipientId: question.authorId.toString(),
-                title: `New Answer on ${question.title
-                    .substring(0, 40)
-                    .concat('...')}`,
-                content: answer.excerpt,
-            })
+        if (!question) {
+            return
         }
+
+        await this.sendNotification.execute({
+            recipientId: question.authorId.toString(),
+            title: `New Answer on ${question.title
+                .substring(0, 40)
+                .concat('...')}`,
+            content: answer.excerpt,
+        })
     }
 }
