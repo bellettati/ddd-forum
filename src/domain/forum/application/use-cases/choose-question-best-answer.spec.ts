@@ -6,9 +6,11 @@ import { makeAnswer } from 'test/factories/make-answer'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
 import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
+import { InMemoryAnswerAttachmentsRepository } from 'test/repositories/in-memory-answer-attachments-repository'
 
 let questionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let questionsRepository: InMemoryQuestionsRepository
+let answerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
 let answersRepository: InMemoryAnswersRepository
 let sut: ChooseQuestionBestAnswerUseCase
 
@@ -19,7 +21,10 @@ describe('Choose Question Best Answer Use Case', () => {
         questionsRepository = new InMemoryQuestionsRepository(
             questionAttachmentsRepository
         )
-        answersRepository = new InMemoryAnswersRepository()
+        answerAttachmentsRepository = new InMemoryAnswerAttachmentsRepository()
+        answersRepository = new InMemoryAnswersRepository(
+            answerAttachmentsRepository
+        )
         sut = new ChooseQuestionBestAnswerUseCase(
             questionsRepository,
             answersRepository

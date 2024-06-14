@@ -2,6 +2,7 @@ import { Optional } from '@/core/types/optional'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { AggregateRoot } from '@/core/entities/aggregate-root'
 import { AnswerAttachmentList } from './answer-attachment-list'
+import { AnswerCreatedEvent } from '../events/answer-created-event'
 
 export interface AnswerProps {
     authorId: UniqueEntityId
@@ -55,7 +56,7 @@ export class Answer extends AggregateRoot<AnswerProps> {
         props: Optional<AnswerProps, 'createdAt' | 'attachments'>,
         id?: UniqueEntityId
     ) {
-        const question = new Answer(
+        const answer = new Answer(
             {
                 ...props,
                 attachments: props.attachments ?? new AnswerAttachmentList(),
@@ -64,7 +65,13 @@ export class Answer extends AggregateRoot<AnswerProps> {
             id
         )
 
-        return question
+        const isNewAnswer = !id
+
+        if (isNewAnswer) {
+            answer.addDomainEvent(new AnswerCreatedEvent(answer))
+        }
+
+        return answer
     }
 
     private touch() {

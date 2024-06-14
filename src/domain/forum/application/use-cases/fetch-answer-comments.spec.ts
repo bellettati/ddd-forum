@@ -3,14 +3,19 @@ import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-r
 import { FetchAnswerCommentsUseCase } from './fetch-answer-comments'
 import { makeAnswer } from 'test/factories/make-answer'
 import { makeAnswerComment } from 'test/factories/make-answer-comment'
+import { InMemoryAnswerAttachmentsRepository } from 'test/repositories/in-memory-answer-attachments-repository'
 
+let answerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
 let answersRepository: InMemoryAnswersRepository
 let answerCommentsRepository: InMemoryAnswerCommentsRepository
 let sut: FetchAnswerCommentsUseCase
 
 describe('Fetch Answer Comments Use Case', () => {
     beforeEach(() => {
-        answersRepository = new InMemoryAnswersRepository()
+        answerAttachmentsRepository = new InMemoryAnswerAttachmentsRepository()
+        answersRepository = new InMemoryAnswersRepository(
+            answerAttachmentsRepository
+        )
         answerCommentsRepository = new InMemoryAnswerCommentsRepository()
         sut = new FetchAnswerCommentsUseCase(answerCommentsRepository)
     })

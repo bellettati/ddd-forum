@@ -3,13 +3,18 @@ import { DeleteAnswerUseCase } from './delete-answer'
 import { makeAnswer } from 'test/factories/make-answer'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
+import { InMemoryAnswerAttachmentsRepository } from 'test/repositories/in-memory-answer-attachments-repository'
 
+let answerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
 let answersRepository: InMemoryAnswersRepository
 let sut: DeleteAnswerUseCase
 
 describe('Delete Answer Use Case', () => {
     beforeEach(() => {
-        answersRepository = new InMemoryAnswersRepository()
+        answerAttachmentsRepository = new InMemoryAnswerAttachmentsRepository()
+        answersRepository = new InMemoryAnswersRepository(
+            answerAttachmentsRepository
+        )
         sut = new DeleteAnswerUseCase(answersRepository)
     })
 
